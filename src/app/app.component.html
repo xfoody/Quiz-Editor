@@ -33,7 +33,7 @@
           *ngFor="let q of quizzes"
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
           [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit'"
-          >
+        >
           {{ q.name }}
           <small>
             {{ q.questions.length }} questions
@@ -51,10 +51,21 @@
     </div>
     <div class="col-md-8" *ngIf="selectedQuiz">
       <br>
-      <button class="btn btn-outline-success">Save</button>
-        <span class="badge bg-danger" *ngIf="numberOfDeletedQuizzes " 0 > - {{ numberOfDeletedQuizzes }}</span>
-        <span class="badge bg-light" *ngIf="getNumberOfEditedQuizzes " 0 > - {{ getNumberOfEditedQuizzes }}</span>
-
+      <button class="btn btn-outline-success">
+        Save
+        <span
+          class="badge badge-danger ml-1"
+          *ngIf="numberOfDeletedQuizzes > 0"
+        >
+          - {{ numberOfDeletedQuizzes }}
+        </span>
+        <span
+          class="badge badge-light ml-1"
+          *ngIf="numberOfEditedQuizzes > 0"
+        >
+          * {{ numberOfEditedQuizzes }}
+        </span>
+      </button>
       <button class="btn btn-link">Cancel</button>
       <br>
       <br>
@@ -109,14 +120,17 @@
         <div class="card-header">
           Other
         </div>
-
         <div class="card-body">
-          <label class="form-check-label text-danger">
-
-            <input type="checkbox" class="form-check-input" [(ngModel)]="selectedQuiz.markedForDelete">
-            Mark For Delete
-          </label>
-
+          <div class="form-check">
+            <label class="form-check-label text-danger">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [(ngModel)]="selectedQuiz.markedForDelete"
+                >
+                Mark for Delete
+              </label>
+          </div>
         </div>
       </div>
     </div>
