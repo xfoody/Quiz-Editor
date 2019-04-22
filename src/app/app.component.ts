@@ -4,7 +4,9 @@ import { QuizService } from './quiz.service';
 interface QuizDisplay {
   name: string;
   originalName: string;
-  questions: QuestionDisplay[]
+
+  questions: QuestionDisplay[];
+
   markedForDelete: boolean;
 }
 
@@ -79,7 +81,7 @@ export class AppComponent implements OnInit {
           name: x.name
           , originalName: x.name
           , questions: x.questions
-          , markedForDelete: x.markedForDelete
+          , markedForDelete: false
         }));
       }
       , (error) => {
@@ -94,8 +96,8 @@ export class AppComponent implements OnInit {
     return this.quizzes.filter(x => x.markedForDelete).length;
   }
 
-  getNumberOfEditedQuizzes() {
-    return this.quzzies.filter(x => x.name !== x.originalName).length;
+  get numberOfEditedQuizzes() {
+    return this.quizzes.filter(x => x.name !== x.originalName).length;
   }
 
   title = 'quiz-editor';
