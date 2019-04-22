@@ -8,13 +8,13 @@
                 Quiz service down. Please try again later. Sorry : - (
             </h3>
           </div>
-      </div>      
+      </div>
     </div>
   </div>
   <div class="row" *ngIf="!serviceDown">
     <div class="col-md-4">
       <br>
-      <button 
+      <button
         (click)="addNewQuiz()"
         class="btn btn-outline-primary"
         >
@@ -28,17 +28,16 @@
       <div class="list-group">
         <a
           [class.active] = "q === selectedQuiz"
-          (click)="selectQuiz(q)" 
+          (click)="selectQuiz(q)"
           href="#"
-          *ngFor="let q of quizzes" 
-          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-          {{ q.name }}
-          <span 
-            class="badge badge-secondary"
-            [class.bg-danger]="q.questions.length === 0"
+          *ngFor="let q of quizzes"
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit'"
           >
-            {{ q.questions.length }}
-          </span>
+          {{ q.name }}
+          <small>
+            {{ q.questions.length }} questions
+          </small>
         </a>
       </div>
     </div>
@@ -53,16 +52,19 @@
     <div class="col-md-8" *ngIf="selectedQuiz">
       <br>
       <button class="btn btn-outline-success">Save</button>
+        <span class="badge bg-danger" *ngIf="numberOfDeletedQuizzes " 0 > - {{ numberOfDeletedQuizzes }}</span>
+        <span class="badge bg-light" *ngIf="getNumberOfEditedQuizzes " 0 > - {{ getNumberOfEditedQuizzes }}</span>
+
       <button class="btn btn-link">Cancel</button>
       <br>
       <br>
-      <div class="card">  
+      <div class="card">
         <div class="card-header">
           General
         </div>
         <div class="card-body">
-          <input 
-            type="text" 
+          <input
+            type="text"
             [(ngModel)]="selectedQuiz.name"
             class="form-control">
         </div>
@@ -73,7 +75,7 @@
           Questions
         </div>
         <div class="card-body">
-          <button 
+          <button
             class="btn btn-outline-primary"
             (click)="addNewQuestion()"
           >
@@ -83,14 +85,14 @@
           <br>
           <div class="row" *ngFor="let question of selectedQuiz.questions">
             <div class="col-md-9">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 [(ngModel)]="question.name"
                 class="form-control"
               />
             </div>
             <div class="col-md-3">
-              <button 
+              <button
                 class="btn btn-link text-danger"
                 (click)="removeQuestion(question)"
               >
@@ -107,8 +109,14 @@
         <div class="card-header">
           Other
         </div>
+
         <div class="card-body">
-          <button class="btn btn-outline-danger">Delete This Quiz</button>
+          <label class="form-check-label text-danger">
+
+            <input type="checkbox" class="form-check-input" [(ngModel)]="selectedQuiz.markedForDelete">
+            Mark For Delete
+          </label>
+
         </div>
       </div>
     </div>

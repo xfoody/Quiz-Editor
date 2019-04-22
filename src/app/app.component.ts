@@ -3,7 +3,9 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
+  originalName: string;
   questions: QuestionDisplay[]
+  markedForDelete: boolean;
 }
 
 interface QuestionDisplay {
@@ -34,7 +36,9 @@ export class AppComponent implements OnInit {
     // Create the new quiz.
     const newQuiz: QuizDisplay = {
       name: "Untitled Quiz"
+      , originalName: "Untitled Quiz"
       , questions: []
+      , markedForDelete: false
     };
 
     // Create a new quiz list with the new quiz...
@@ -46,14 +50,14 @@ export class AppComponent implements OnInit {
     ];
 
     // Select the newly added quiz.
-    this.selectedQuiz = newQuiz; 
+    this.selectedQuiz = newQuiz;
   }
 
   removeQuestion(questionToRemove) {
     this.selectedQuiz.questions = this.selectedQuiz.questions
       .filter(x => x !== questionToRemove);
   }
-  
+
   addNewQuestion() {
     this.selectedQuiz.questions = [
       ...this.selectedQuiz.questions
@@ -71,9 +75,11 @@ export class AppComponent implements OnInit {
       (data) => {
         console.log(data);
 
-        this.quizzes = (<any[]> data).map(x => ({ 
+        this.quizzes = (<any[]> data).map(x => ({
           name: x.name
+          , originalName: x.name
           , questions: x.questions
+          , markedForDelete: x.markedForDelete
         }));
       }
       , (error) => {
@@ -83,6 +89,14 @@ export class AppComponent implements OnInit {
     );
 
   };
+
+  get numberOfDeletedQuizzes() {
+    return this.quizzes.filter(x => x.markedForDelete).length;
+  }
+
+  getNumberOfEditedQuizzes() {
+    return this.quzzies.filter(x => x.name !== x.originalName).length;
+  }
 
   title = 'quiz-editor';
   myWidth = 250;
@@ -118,7 +132,7 @@ export class AppComponent implements OnInit {
     ).catch(
       error => {
         console.log(".catch")
-        console.log(error) 
+        console.log(error)
       }
     );
   }
