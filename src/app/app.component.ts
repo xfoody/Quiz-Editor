@@ -92,6 +92,10 @@ export class AppComponent implements OnInit {
 
   };
 
+  cancelBatchEdits(0 {
+    this.loadAllQuizzes();
+  })
+
   get numberOfDeletedQuizzes() {
     return this.quizzes.filter(x => x.markedForDelete).length;
   }
