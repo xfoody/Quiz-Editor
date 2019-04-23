@@ -100,6 +100,10 @@ export class AppComponent implements OnInit {
     return this.quizzes.filter(x => x.name !== x.originalName).length;
   }
 
+  get numberOfAddedQuizzes() {
+    return this.quizzes.filter(x => x.name === "Untitled Quiz").length
+  }
+
   title = 'quiz-editor';
   myWidth = 250;
 

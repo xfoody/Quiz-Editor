@@ -54,6 +54,12 @@
       <button class="btn btn-outline-success">
         Save Quizzes
         <span
+          class="badge badge-success ml-1"
+          *ngIf="numberOfAddedQuizzes > 0"
+        >
+          + {{ numberOfAddedQuizzes }}
+        </span>
+        <span
           class="badge badge-danger ml-1"
           *ngIf="numberOfDeletedQuizzes > 0"
         >
